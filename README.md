@@ -3,7 +3,7 @@ The codes and data are for the paper Health effects of a minimum wage hike: Evid
 
 ### Data
 - KLoSA 1-8th wave version 2022 v3 (STATA) (https://survey.keis.or.kr/eng/klosa/databoard/List.jsp).
-- Please note that access to Mini-Mental Examination Score (MMSE) data is temporarily ceased wave for internal review for data disclosure (https://survey.keis.or.kr/madang/notice/Read.jsp?ntt_id=5634). 
+- Please note that access to Mini-Mental Examination Score (MMSE) data is temporarily ceased due to the need for internal review for data disclosure (https://survey.keis.or.kr/madang/notice/Read.jsp?ntt_id=5634). 
 
 ### Software
 - STATA code is used to prepare the dataset and R code for the analysis.
