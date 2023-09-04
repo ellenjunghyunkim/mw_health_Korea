@@ -8,6 +8,7 @@ The codes and data are for the paper Health effects of a minimum wage hike: Evid
 ### Software
 - STATA code is used to prepare the dataset and R code for the analysis.
 - STATA version 17.0, R version 4.3.1 are used.
+- WeightIt pacakge version 0.14.2 (https://cran.r-project.org/web/packages/WeightIt/index.html) is used.
 
 ## Steps to reproduce
 ### Data code (in STATA)
