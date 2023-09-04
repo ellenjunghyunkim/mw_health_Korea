@@ -16,6 +16,7 @@ KLoSA_MW.do subsets the variables of interest from the KLoSA longitudinal data.
 1. Use 1. Main analysis.R for the main estimations and summary statistics.
 2. Use 2. Placebo analysis.R for the placebo sample estimations and summary statistics.
 3. Use 3. Sensitivity analysis.R contains
+   
     1. Alternative definition of control groups (110 to 150%)
     2. Analysis including individuals who were unemployed after the minimum wage increase.
     3. Alternative definition of intervention group (narrower)
