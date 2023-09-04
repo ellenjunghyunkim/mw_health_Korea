@@ -1,9 +1,8 @@
 ## Description of the data
-- The codes and data are for the paper Health effects of a minimum wage hike: Evidence from South Korea experiments, Kim, Jung Hyun and Suhrcke, Marc and and Leist, Anja (2023).
--  We use The Korean Longitudinal Study of Aging (KLoSA). 
+The codes and data are for the paper Health effects of a minimum wage hike: Evidence from South Korea experiments, Kim, Jung Hyun and Suhrcke, Marc and and Leist, Anja (2023).
 
 ### Data
-- KLoSA 1-8th wave (STATA) (https://survey.keis.or.kr/eng/klosa/databoard/List.jsp).
+KLoSA 1-8th wave (STATA) (https://survey.keis.or.kr/eng/klosa/databoard/List.jsp).
 
 ### Software
 - STATA code is used to prepare the dataset and R code for the analysis.
