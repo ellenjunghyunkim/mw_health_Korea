@@ -19,7 +19,7 @@ KLoSA_MW.do subsets the variables of interest from the KLoSA longitudinal data.
     1. Alternative definition of control groups (110 to 150%)
     2. Analysis including individuals who were unemployed after the minimum wage increase.
     3. Alternative definition of intervention group (narrower)
-    4. Alternative outcome variables.
+    4. Alternative outcome variables. (Separate analysis by the cognitive domain)
 
 If you encounter any errors/problems reproducing the results, please send Jung Hyun an email.
 
