@@ -35,7 +35,7 @@ KLoSA_detail$wave <- as.numeric(KLoSA_detail$wave)
 
 KLoSA_main <- left_join(KLoSA_main, KLoSA_detail,by = c("pid", "wave"))
 
-# We consider two waves, 6 and 7.
+# We consider two waves, 5 and 6.
 KLoSA_main <- KLoSA_main[KLoSA_main$wave == 5| KLoSA_main$wave == 6,]
 KLoSA_detail <- NULL
 
