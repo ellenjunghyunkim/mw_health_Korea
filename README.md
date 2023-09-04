@@ -13,10 +13,13 @@ KLoSA 1-8th wave (STATA) (https://survey.keis.or.kr/eng/klosa/databoard/List.jsp
 KLoSA_MW.do subsets the variables of interest from the KLoSA longitudinal data.
 
 ### Main Estimation code (in R)
-1. Use 1. Final data.R to get the final analytical samples.
-2. Use 2. Descriptive statistics.R to generate the descriptive statistics. 
-3. Use 3-1. Main estimation.R to replicate the main results with 2016 to 2018 survey.
-4. Use 3-2. Proxy estimation.R to replicate the placebo results with 2014 to 2016 survey.
+1. Use 1. Main analysis.R for the main estimations and summary statistics.
+2. Use 2. Placebo analysis.R for the placebo sample estimations and summary statistics.
+3. Use 3. Sensitivity analysis.R contains
+    1. Alternative definition of control groups (110 to 150%)
+    2. Analysis including individuals who were unemployed after the minimum wage increase.
+    3. Alternative definition of intervention group (narrower)
+    4. Alternative outcome variables.
 
 If you encounter any errors/problems reproducing the results, please send Jung Hyun an email.
 
