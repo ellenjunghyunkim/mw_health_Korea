@@ -8,7 +8,7 @@ KLoSA 1-8th wave (STATA) (https://survey.keis.or.kr/eng/klosa/databoard/List.jsp
 - STATA code is used to prepare the dataset and R code for the analysis.
 - STATA version 17.0, R version 4.3.1 are used.
 
-#$ Steps to reproduce
+## Steps to reproduce
 ### Data code (in STATA)
 KLoSA_MW.do subsets the variables of interest from the KLoSA longitudinal data.
 
