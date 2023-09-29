@@ -1,5 +1,5 @@
 ## Description of the data
-The codes and data are for the paper Health effects of a minimum wage hike: Evidence from South Korea experiments, Kim, Jung Hyun and Suhrcke, Marc and and Leist, Anja (2023).
+The codes and data are for the paper The unintended effects of minimum wage increases on health: Evidence from South Korea, Kim, Jung Hyun and Suhrcke, Marc and and Leist, Anja (2023).
 
 ### Data
 - KLoSA 1-8th wave version 2022 v3 (STATA) (https://survey.keis.or.kr/eng/klosa/databoard/List.jsp).
