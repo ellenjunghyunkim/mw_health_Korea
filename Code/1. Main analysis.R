@@ -2,7 +2,7 @@
 ## project: = Health effects of a minimum wage hike: Evidence from South Korea experiments
 ## author(s): Jung Hyun Kim
 ## code started: February, 2023
-## last update: September, 2023
+## last update: January, 2024
 ####################################################################################################
 
 ####################################################################################################
@@ -63,8 +63,7 @@ KLoSA_main$ww <- KLoSA_main$wd_com052/(52/12) #weekly wage
 KLoSA_main$hw <- KLoSA_main$ww/KLoSA_main$wd_com032 #hourly wage
 KLoSA_main[!is.na(KLoSA_main$hw) & KLoSA_main$hw < 0,] <- NA #those without hourly wage information and negative hourly wage are considered as missing.
 
-minimum_wage = 0.603 # minimum wage at year 2016
-increase = 0.753 - 0.603 #increase from year 2016 to 2018.
+minimum_wage = 0.753 # minimum wage at year 2018
 
 # Exclude individuals whose minimum wage at baseline was bigger than 150% of it.
 
@@ -72,13 +71,13 @@ attrition <- KLoSA_main[KLoSA_main$wave == 6 & KLoSA_main$hw > 0,]
 attrition <- attrition[attrition$hw <= minimum_wage * 1.5 & attrition$wave == 6 ,]
 
 attrition <- subset(attrition, select = c("pid"))
-attrition <- semi_join(KLoSA_main, attrition) # (2075 - 1154)/2075 = 44%, 921
+attrition <- semi_join(KLoSA_main, attrition) # (2075 - 1349)/2075 = 35%, 726
 
 # Exclude unemployed individuals after the minimum wage increase.
 # In the sensitivity analysis, we relax this condition. 
 
 attrition <- attrition[!is.na(attrition$hw),]
-KLoSA_main <- attrition # without unemployed individuals (1154 - 987)/1154 = 14%, 167 
+KLoSA_main <- attrition # without unemployed individuals (1349 - 1158)/1349 = 14%, 191 
 
 # Include individuals with observations available in both waves.
 
@@ -87,7 +86,7 @@ KLoSA_main <-
   dplyr::mutate(wave = as.integer(wave)) %>% 
   group_by(pid) %>% 
   dplyr::mutate(grp = cumsum(c(1, diff(wave) != 1))) %>% 
-  filter(n() >= 2)# without unemployed individuals (987 - 790)/987 = 20%, 197
+  filter(n() >= 2)# without unemployed individuals (1158 - 924)/1158 = 20%, 234
 
 # Intervention group assignment
 # 1) Hourly wage at baseline is smaller than the minimum wage.
