@@ -843,13 +843,13 @@ attrition <- KLoSA_main[KLoSA_main$wave == 6 & KLoSA_main$hw > 0,]
 attrition <- attrition[attrition$hw <= minimum_wage * 1.5 & attrition$wave == 6 ,]
 
 attrition <- subset(attrition, select = c("pid"))
-attrition <- semi_join(KLoSA_main, attrition) 
+attrition <- semi_join(KLoSA_main, attrition) #1349
 
 # Exclude unemployed individuals after the minimum wage increase.
 # In the sensitivity analysis, we relax this condition. 
 
-#attrition <- attrition[!is.na(attrition$hw),]
-KLoSA_main <- attrition # without unemployed individuals 
+attrition <- attrition[!is.na(attrition$pid),]
+KLoSA_main <- attrition # Including unemployed individuals 
 
 # Include individuals with observations available in both waves.
 
@@ -859,7 +859,7 @@ KLoSA_main <-
   group_by(pid) %>% 
   dplyr::mutate(grp = cumsum(c(1, diff(wave) != 1))) %>% 
   filter(n() >= 2)# without unemployed individuals 
-KLoSA_main <- KLoSA_main[!is.na(KLoSA_main$pid),] #without unemployed individuals (1349-1274)/1349
+KLoSA_main <- KLoSA_main[!is.na(KLoSA_main$pid),] # (1349-1274)/1349
 
 # Intervention group assignment
 # 1) Hourly wage at baseline is smaller than the minimum wage.
