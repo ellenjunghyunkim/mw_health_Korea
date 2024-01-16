@@ -214,7 +214,7 @@ KLoSA_main$health <- as.numeric(KLoSA_main$health)
 sel <- c("female", "wA002_age",  "spouse", 
          "working_days","working_hours", 
          "wedu",  "income",
-         "group", "mmse", "health", "wwgt_c")
+         "group", "mmse", "health")
 
 Unweighted_statistics <-
   survey::svydesign(KLoSA_main[KLoSA_main$wave == 6,]$pid, data = subset(KLoSA_main[KLoSA_main$wave == 6,] , select = sel), weights = KLoSA_main[KLoSA_main$wave == 6,]$wwgt_c) %>%
