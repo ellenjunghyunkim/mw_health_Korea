@@ -61,8 +61,7 @@ KLoSA_main$ww <- KLoSA_main$wd_com052/(52/12) #weekly wage
 KLoSA_main$hw <- KLoSA_main$ww/KLoSA_main$wd_com032 #hourly wage
 KLoSA_main[!is.na(KLoSA_main$hw) & KLoSA_main$hw < 0,] <- NA #those without hourly wage information and negative hourly wage are considered as missing.
 
-minimum_wage = 0.521 # minimum wage at year 2014
-increase = 0.603 - 0.521 #increase from year 2014 to 2016.
+minimum_wage = 0.603 # minimum wage at year 2016
 
 # Exclude individuals whose minimum wage at baseline was bigger than 150% of it.
 
