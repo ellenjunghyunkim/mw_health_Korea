@@ -2,7 +2,7 @@
 ## project: = Health effects of a minimum wage hike: Evidence from South Korea experiments
 ## author(s): Jung Hyun Kim
 ## code started: February, 2023
-## last update: September, 2023
+## last update: January, 2024
 ####################################################################################################
 
 ####################################################################################################
@@ -51,19 +51,19 @@ KLoSA_detail <- NULL
 notworking_wave6 <- KLoSA_main[!is.na(KLoSA_main$wd_com032) & KLoSA_main$wave == 6,] 
 notworking_wave6 <- subset(notworking_wave6, select = c("pid"))
 KLoSA_main  <- left_join(notworking_wave6, KLoSA_main) 
-# (12754 - 4540)/12754 =  64%, 8214
+
 notworking_wave6 <- NULL
 
 # We select individuals worked as a paid employee at baseline.
 employee <- KLoSA_main[KLoSA_main$wemp == 1 & KLoSA_main$wave == 6,] #1. employee #2. self-employed #3. unpaid family-related labor 
 employee  <- subset(employee, select = c("pid"))
-KLoSA_main  <- left_join(employee, KLoSA_main) #1057
-# (4540 - 2167)/4540 = 52&, 2373
+KLoSA_main  <- left_join(employee, KLoSA_main) 
+
 employee <- NULL
 
 # We select individuals with main health outcome.
 KLoSA_main <- KLoSA_main[!is.na(KLoSA_main$wmmse),]
-# (2167 - 2075)/2167  = 4%, 92
+
 
 #We calculate hourly wage from monthly wage and weekly working hours. 
 
@@ -71,8 +71,7 @@ KLoSA_main$ww <- KLoSA_main$wd_com052/(52/12) #weekly wage
 KLoSA_main$hw <- KLoSA_main$ww/KLoSA_main$wd_com032 #hourly wage
 KLoSA_main[!is.na(KLoSA_main$hw) & KLoSA_main$hw < 0,] <- NA #those without hourly wage information and negative hourly wage are considered as missing.
 
-minimum_wage = 0.603 # minimum wage at year 2016
-increase = 0.753 - 0.603 #increase from year 2016 to 2018.
+minimum_wage = 0.753 # minimum wage at year 2018
 
 # Exclude individuals whose minimum wage at baseline was bigger than 150% of it.
 
@@ -80,13 +79,13 @@ attrition <- KLoSA_main[KLoSA_main$wave == 6 & KLoSA_main$hw > 0,]
 attrition <- attrition[attrition$hw <= minimum_wage * 1.5 & attrition$wave == 6 ,]
 
 attrition <- subset(attrition, select = c("pid"))
-attrition <- semi_join(KLoSA_main, attrition) # (2075 - 1154)/2075 = 44%, 921
+attrition <- semi_join(KLoSA_main, attrition) 
 
 # Exclude unemployed individuals after the minimum wage increase.
 # In the sensitivity analysis, we relax this condition. 
 
 attrition <- attrition[!is.na(attrition$hw),]
-KLoSA_main <- attrition # without unemployed individuals (1154 - 987)/1154 = 14%, 167 
+KLoSA_main <- attrition # without unemployed individuals 
 
 # Include individuals with observations available in both waves.
 
@@ -95,17 +94,13 @@ KLoSA_main <-
   dplyr::mutate(wave = as.integer(wave)) %>% 
   group_by(pid) %>% 
   dplyr::mutate(grp = cumsum(c(1, diff(wave) != 1))) %>% 
-  filter(n() >= 2)# without unemployed individuals (987 - 790)/987 = 20%, 197
+  filter(n() >= 2)# without unemployed individuals 
 
 # Intervention group assignment
 # 1) Hourly wage at baseline is smaller than the minimum wage.
 intervention_group <- KLoSA_main[KLoSA_main$hw < minimum_wage  & KLoSA_main$wave == 6 ,]
 intervention_group <- subset(intervention_group, select = c("pid"))
 intervention_group<- semi_join(KLoSA_main, intervention_group)
-
-# In the sensitivity analysis, we put additional restriction
-# 2) That the post minimum wage increase should fall between 90 - 120% of the new minimum wage.
-#intervention_group <- MW[MW$hw >= 0.90 * (minimum_wage + increase) & MW$hw <= 1.20 * (minimum_wage + increase) & MW$wave == 7,] 
 
 intervention_group$exposure <- 1
 intervention_group$group <- "intervention"
@@ -209,19 +204,19 @@ KLoSA_detail <- NULL
 notworking_wave6 <- KLoSA_main[!is.na(KLoSA_main$wd_com032) & KLoSA_main$wave == 6,] 
 notworking_wave6 <- subset(notworking_wave6, select = c("pid"))
 KLoSA_main  <- left_join(notworking_wave6, KLoSA_main) 
-# (12754 - 4540)/12754 =  64%, 8214
+
 notworking_wave6 <- NULL
 
 # We select individuals worked as a paid employee at baseline.
 employee <- KLoSA_main[KLoSA_main$wemp == 1 & KLoSA_main$wave == 6,] #1. employee #2. self-employed #3. unpaid family-related labor 
 employee  <- subset(employee, select = c("pid"))
-KLoSA_main  <- left_join(employee, KLoSA_main) #1057
-# (4540 - 2167)/4540 = 52&, 2373
+KLoSA_main  <- left_join(employee, KLoSA_main) 
+
 employee <- NULL
 
 # We select individuals with main health outcome.
 KLoSA_main <- KLoSA_main[!is.na(KLoSA_main$wmmse),]
-# (2167 - 2075)/2167  = 4%, 92
+
 
 #We calculate hourly wage from monthly wage and weekly working hours. 
 
@@ -229,8 +224,7 @@ KLoSA_main$ww <- KLoSA_main$wd_com052/(52/12) #weekly wage
 KLoSA_main$hw <- KLoSA_main$ww/KLoSA_main$wd_com032 #hourly wage
 KLoSA_main[!is.na(KLoSA_main$hw) & KLoSA_main$hw < 0,] <- NA #those without hourly wage information and negative hourly wage are considered as missing.
 
-minimum_wage = 0.603 # minimum wage at year 2016
-increase = 0.753 - 0.603 #increase from year 2016 to 2018.
+minimum_wage = 0.753 # minimum wage at year 2018
 
 # Exclude individuals whose minimum wage at baseline was bigger than 150% of it.
 
@@ -238,13 +232,13 @@ attrition <- KLoSA_main[KLoSA_main$wave == 6 & KLoSA_main$hw > 0,]
 attrition <- attrition[attrition$hw <= minimum_wage * 1.5 & attrition$wave == 6 ,]
 
 attrition <- subset(attrition, select = c("pid"))
-attrition <- semi_join(KLoSA_main, attrition) # (2075 - 1154)/2075 = 44%, 921
+attrition <- semi_join(KLoSA_main, attrition) 
 
 # Exclude unemployed individuals after the minimum wage increase.
 # In the sensitivity analysis, we relax this condition. 
 
 attrition <- attrition[!is.na(attrition$hw),]
-KLoSA_main <- attrition # without unemployed individuals (1154 - 987)/1154 = 14%, 167 
+KLoSA_main <- attrition # without unemployed individuals 
 
 # Include individuals with observations available in both waves.
 
@@ -253,17 +247,13 @@ KLoSA_main <-
   dplyr::mutate(wave = as.integer(wave)) %>% 
   group_by(pid) %>% 
   dplyr::mutate(grp = cumsum(c(1, diff(wave) != 1))) %>% 
-  filter(n() >= 2)# without unemployed individuals (987 - 790)/987 = 20%, 197
+  filter(n() >= 2)# without unemployed individuals 
 
 # Intervention group assignment
 # 1) Hourly wage at baseline is smaller than the minimum wage.
 intervention_group <- KLoSA_main[KLoSA_main$hw < minimum_wage  & KLoSA_main$wave == 6 ,]
 intervention_group <- subset(intervention_group, select = c("pid"))
 intervention_group<- semi_join(KLoSA_main, intervention_group)
-
-# In the sensitivity analysis, we put additional restriction
-# 2) That the post minimum wage increase should fall between 90 - 120% of the new minimum wage.
-#intervention_group <- MW[MW$hw >= 0.90 * (minimum_wage + increase) & MW$hw <= 1.20 * (minimum_wage + increase) & MW$wave == 7,] 
 
 intervention_group$exposure <- 1
 intervention_group$group <- "intervention"
@@ -367,19 +357,19 @@ KLoSA_detail <- NULL
 notworking_wave6 <- KLoSA_main[!is.na(KLoSA_main$wd_com032) & KLoSA_main$wave == 6,] 
 notworking_wave6 <- subset(notworking_wave6, select = c("pid"))
 KLoSA_main  <- left_join(notworking_wave6, KLoSA_main) 
-# (12754 - 4540)/12754 =  64%, 8214
+
 notworking_wave6 <- NULL
 
 # We select individuals worked as a paid employee at baseline.
 employee <- KLoSA_main[KLoSA_main$wemp == 1 & KLoSA_main$wave == 6,] #1. employee #2. self-employed #3. unpaid family-related labor 
 employee  <- subset(employee, select = c("pid"))
-KLoSA_main  <- left_join(employee, KLoSA_main) #1057
-# (4540 - 2167)/4540 = 52&, 2373
+KLoSA_main  <- left_join(employee, KLoSA_main) 
+
 employee <- NULL
 
 # We select individuals with main health outcome.
 KLoSA_main <- KLoSA_main[!is.na(KLoSA_main$wmmse),]
-# (2167 - 2075)/2167  = 4%, 92
+
 
 #We calculate hourly wage from monthly wage and weekly working hours. 
 
@@ -387,8 +377,7 @@ KLoSA_main$ww <- KLoSA_main$wd_com052/(52/12) #weekly wage
 KLoSA_main$hw <- KLoSA_main$ww/KLoSA_main$wd_com032 #hourly wage
 KLoSA_main[!is.na(KLoSA_main$hw) & KLoSA_main$hw < 0,] <- NA #those without hourly wage information and negative hourly wage are considered as missing.
 
-minimum_wage = 0.603 # minimum wage at year 2016
-increase = 0.753 - 0.603 #increase from year 2016 to 2018.
+minimum_wage = 0.753 # minimum wage at year 2018
 
 # Exclude individuals whose minimum wage at baseline was bigger than 150% of it.
 
@@ -396,13 +385,13 @@ attrition <- KLoSA_main[KLoSA_main$wave == 6 & KLoSA_main$hw > 0,]
 attrition <- attrition[attrition$hw <= minimum_wage * 1.5 & attrition$wave == 6 ,]
 
 attrition <- subset(attrition, select = c("pid"))
-attrition <- semi_join(KLoSA_main, attrition) # (2075 - 1154)/2075 = 44%, 921
+attrition <- semi_join(KLoSA_main, attrition) 
 
 # Exclude unemployed individuals after the minimum wage increase.
 # In the sensitivity analysis, we relax this condition. 
 
 attrition <- attrition[!is.na(attrition$hw),]
-KLoSA_main <- attrition # without unemployed individuals (1154 - 987)/1154 = 14%, 167 
+KLoSA_main <- attrition # without unemployed individuals 
 
 # Include individuals with observations available in both waves.
 
@@ -411,17 +400,13 @@ KLoSA_main <-
   dplyr::mutate(wave = as.integer(wave)) %>% 
   group_by(pid) %>% 
   dplyr::mutate(grp = cumsum(c(1, diff(wave) != 1))) %>% 
-  filter(n() >= 2)# without unemployed individuals (987 - 790)/987 = 20%, 197
+  filter(n() >= 2)# without unemployed individuals 
 
 # Intervention group assignment
 # 1) Hourly wage at baseline is smaller than the minimum wage.
 intervention_group <- KLoSA_main[KLoSA_main$hw < minimum_wage  & KLoSA_main$wave == 6 ,]
 intervention_group <- subset(intervention_group, select = c("pid"))
 intervention_group<- semi_join(KLoSA_main, intervention_group)
-
-# In the sensitivity analysis, we put additional restriction
-# 2) That the post minimum wage increase should fall between 90 - 120% of the new minimum wage.
-#intervention_group <- MW[MW$hw >= 0.90 * (minimum_wage + increase) & MW$hw <= 1.20 * (minimum_wage + increase) & MW$wave == 7,] 
 
 intervention_group$exposure <- 1
 intervention_group$group <- "intervention"
@@ -525,19 +510,19 @@ KLoSA_detail <- NULL
 notworking_wave6 <- KLoSA_main[!is.na(KLoSA_main$wd_com032) & KLoSA_main$wave == 6,] 
 notworking_wave6 <- subset(notworking_wave6, select = c("pid"))
 KLoSA_main  <- left_join(notworking_wave6, KLoSA_main) 
-# (12754 - 4540)/12754 =  64%, 8214
+
 notworking_wave6 <- NULL
 
 # We select individuals worked as a paid employee at baseline.
 employee <- KLoSA_main[KLoSA_main$wemp == 1 & KLoSA_main$wave == 6,] #1. employee #2. self-employed #3. unpaid family-related labor 
 employee  <- subset(employee, select = c("pid"))
-KLoSA_main  <- left_join(employee, KLoSA_main) #1057
-# (4540 - 2167)/4540 = 52&, 2373
+KLoSA_main  <- left_join(employee, KLoSA_main) 
+
 employee <- NULL
 
 # We select individuals with main health outcome.
 KLoSA_main <- KLoSA_main[!is.na(KLoSA_main$wmmse),]
-# (2167 - 2075)/2167  = 4%, 92
+
 
 #We calculate hourly wage from monthly wage and weekly working hours. 
 
@@ -545,8 +530,7 @@ KLoSA_main$ww <- KLoSA_main$wd_com052/(52/12) #weekly wage
 KLoSA_main$hw <- KLoSA_main$ww/KLoSA_main$wd_com032 #hourly wage
 KLoSA_main[!is.na(KLoSA_main$hw) & KLoSA_main$hw < 0,] <- NA #those without hourly wage information and negative hourly wage are considered as missing.
 
-minimum_wage = 0.603 # minimum wage at year 2016
-increase = 0.753 - 0.603 #increase from year 2016 to 2018.
+minimum_wage = 0.753 # minimum wage at year 2018
 
 # Exclude individuals whose minimum wage at baseline was bigger than 150% of it.
 
@@ -554,13 +538,13 @@ attrition <- KLoSA_main[KLoSA_main$wave == 6 & KLoSA_main$hw > 0,]
 attrition <- attrition[attrition$hw <= minimum_wage * 1.5 & attrition$wave == 6 ,]
 
 attrition <- subset(attrition, select = c("pid"))
-attrition <- semi_join(KLoSA_main, attrition) # (2075 - 1154)/2075 = 44%, 921
+attrition <- semi_join(KLoSA_main, attrition) 
 
 # Exclude unemployed individuals after the minimum wage increase.
 # In the sensitivity analysis, we relax this condition. 
 
 attrition <- attrition[!is.na(attrition$hw),]
-KLoSA_main <- attrition # without unemployed individuals (1154 - 987)/1154 = 14%, 167 
+KLoSA_main <- attrition # without unemployed individuals 
 
 # Include individuals with observations available in both waves.
 
@@ -569,17 +553,13 @@ KLoSA_main <-
   dplyr::mutate(wave = as.integer(wave)) %>% 
   group_by(pid) %>% 
   dplyr::mutate(grp = cumsum(c(1, diff(wave) != 1))) %>% 
-  filter(n() >= 2)# without unemployed individuals (987 - 790)/987 = 20%, 197
+  filter(n() >= 2)# without unemployed individuals 
 
 # Intervention group assignment
 # 1) Hourly wage at baseline is smaller than the minimum wage.
 intervention_group <- KLoSA_main[KLoSA_main$hw < minimum_wage  & KLoSA_main$wave == 6 ,]
 intervention_group <- subset(intervention_group, select = c("pid"))
 intervention_group<- semi_join(KLoSA_main, intervention_group)
-
-# In the sensitivity analysis, we put additional restriction
-# 2) That the post minimum wage increase should fall between 90 - 120% of the new minimum wage.
-#intervention_group <- MW[MW$hw >= 0.90 * (minimum_wage + increase) & MW$hw <= 1.20 * (minimum_wage + increase) & MW$wave == 7,] 
 
 intervention_group$exposure <- 1
 intervention_group$group <- "intervention"
@@ -683,19 +663,19 @@ KLoSA_detail <- NULL
 notworking_wave6 <- KLoSA_main[!is.na(KLoSA_main$wd_com032) & KLoSA_main$wave == 6,] 
 notworking_wave6 <- subset(notworking_wave6, select = c("pid"))
 KLoSA_main  <- left_join(notworking_wave6, KLoSA_main) 
-# (12754 - 4540)/12754 =  64%, 8214
+
 notworking_wave6 <- NULL
 
 # We select individuals worked as a paid employee at baseline.
 employee <- KLoSA_main[KLoSA_main$wemp == 1 & KLoSA_main$wave == 6,] #1. employee #2. self-employed #3. unpaid family-related labor 
 employee  <- subset(employee, select = c("pid"))
-KLoSA_main  <- left_join(employee, KLoSA_main) #1057
-# (4540 - 2167)/4540 = 52&, 2373
+KLoSA_main  <- left_join(employee, KLoSA_main) 
+
 employee <- NULL
 
 # We select individuals with main health outcome.
 KLoSA_main <- KLoSA_main[!is.na(KLoSA_main$wmmse),]
-# (2167 - 2075)/2167  = 4%, 92
+
 
 #We calculate hourly wage from monthly wage and weekly working hours. 
 
@@ -703,8 +683,7 @@ KLoSA_main$ww <- KLoSA_main$wd_com052/(52/12) #weekly wage
 KLoSA_main$hw <- KLoSA_main$ww/KLoSA_main$wd_com032 #hourly wage
 KLoSA_main[!is.na(KLoSA_main$hw) & KLoSA_main$hw < 0,] <- NA #those without hourly wage information and negative hourly wage are considered as missing.
 
-minimum_wage = 0.603 # minimum wage at year 2016
-increase = 0.753 - 0.603 #increase from year 2016 to 2018.
+minimum_wage = 0.753 # minimum wage at year 2018
 
 # Exclude individuals whose minimum wage at baseline was bigger than 150% of it.
 
@@ -712,13 +691,13 @@ attrition <- KLoSA_main[KLoSA_main$wave == 6 & KLoSA_main$hw > 0,]
 attrition <- attrition[attrition$hw <= minimum_wage * 1.5 & attrition$wave == 6 ,]
 
 attrition <- subset(attrition, select = c("pid"))
-attrition <- semi_join(KLoSA_main, attrition) # (2075 - 1154)/2075 = 44%, 921
+attrition <- semi_join(KLoSA_main, attrition) 
 
 # Exclude unemployed individuals after the minimum wage increase.
 # In the sensitivity analysis, we relax this condition. 
 
 attrition <- attrition[!is.na(attrition$hw),]
-KLoSA_main <- attrition # without unemployed individuals (1154 - 987)/1154 = 14%, 167 
+KLoSA_main <- attrition # without unemployed individuals 
 
 # Include individuals with observations available in both waves.
 
@@ -727,17 +706,13 @@ KLoSA_main <-
   dplyr::mutate(wave = as.integer(wave)) %>% 
   group_by(pid) %>% 
   dplyr::mutate(grp = cumsum(c(1, diff(wave) != 1))) %>% 
-  filter(n() >= 2)# without unemployed individuals (987 - 790)/987 = 20%, 197
+  filter(n() >= 2)# without unemployed individuals 
 
 # Intervention group assignment
 # 1) Hourly wage at baseline is smaller than the minimum wage.
 intervention_group <- KLoSA_main[KLoSA_main$hw < minimum_wage  & KLoSA_main$wave == 6 ,]
 intervention_group <- subset(intervention_group, select = c("pid"))
 intervention_group<- semi_join(KLoSA_main, intervention_group)
-
-# In the sensitivity analysis, we put additional restriction
-# 2) That the post minimum wage increase should fall between 90 - 120% of the new minimum wage.
-#intervention_group <- MW[MW$hw >= 0.90 * (minimum_wage + increase) & MW$hw <= 1.20 * (minimum_wage + increase) & MW$wave == 7,] 
 
 intervention_group$exposure <- 1
 intervention_group$group <- "intervention"
@@ -840,19 +815,19 @@ KLoSA_detail <- NULL
 notworking_wave6 <- KLoSA_main[!is.na(KLoSA_main$wd_com032) & KLoSA_main$wave == 6,] 
 notworking_wave6 <- subset(notworking_wave6, select = c("pid"))
 KLoSA_main  <- left_join(notworking_wave6, KLoSA_main) 
-# (12754 - 4540)/12754 =  64%, 8214
+
 notworking_wave6 <- NULL
 
 # We select individuals worked as a paid employee at baseline.
 employee <- KLoSA_main[KLoSA_main$wemp == 1 & KLoSA_main$wave == 6,] #1. employee #2. self-employed #3. unpaid family-related labor 
 employee  <- subset(employee, select = c("pid"))
-KLoSA_main  <- left_join(employee, KLoSA_main) #1057
-# (4540 - 2167)/4540 = 52&, 2373
+KLoSA_main  <- left_join(employee, KLoSA_main) 
+
 employee <- NULL
 
 # We select individuals with main health outcome.
 KLoSA_main <- KLoSA_main[!is.na(KLoSA_main$wmmse),]
-# (2167 - 2075)/2167  = 4%, 92
+
 
 #We calculate hourly wage from monthly wage and weekly working hours. 
 
@@ -860,8 +835,7 @@ KLoSA_main$ww <- KLoSA_main$wd_com052/(52/12) #weekly wage
 KLoSA_main$hw <- KLoSA_main$ww/KLoSA_main$wd_com032 #hourly wage
 KLoSA_main[!is.na(KLoSA_main$hw) & KLoSA_main$hw < 0,] <- NA #those without hourly wage information and negative hourly wage are considered as missing.
 
-minimum_wage = 0.603 # minimum wage at year 2016
-increase = 0.753 - 0.603 #increase from year 2016 to 2018.
+minimum_wage = 0.753 # minimum wage at year 2018
 
 # Exclude individuals whose minimum wage at baseline was bigger than 150% of it.
 
@@ -869,13 +843,13 @@ attrition <- KLoSA_main[KLoSA_main$wave == 6 & KLoSA_main$hw > 0,]
 attrition <- attrition[attrition$hw <= minimum_wage * 1.5 & attrition$wave == 6 ,]
 
 attrition <- subset(attrition, select = c("pid"))
-attrition <- semi_join(KLoSA_main, attrition) # (2075 - 1154)/2075 = 44%, 921
+attrition <- semi_join(KLoSA_main, attrition) 
 
 # Exclude unemployed individuals after the minimum wage increase.
 # In the sensitivity analysis, we relax this condition. 
 
 #attrition <- attrition[!is.na(attrition$hw),]
-KLoSA_main <- attrition # without unemployed individuals (1154 - 987)/1154 = 14%, 167 
+KLoSA_main <- attrition # without unemployed individuals 
 
 # Include individuals with observations available in both waves.
 
@@ -884,17 +858,13 @@ KLoSA_main <-
   dplyr::mutate(wave = as.integer(wave)) %>% 
   group_by(pid) %>% 
   dplyr::mutate(grp = cumsum(c(1, diff(wave) != 1))) %>% 
-  filter(n() >= 2)# without unemployed individuals (987 - 790)/987 = 20%, 197
+  filter(n() >= 2)# without unemployed individuals 
 
 # Intervention group assignment
 # 1) Hourly wage at baseline is smaller than the minimum wage.
 intervention_group <- KLoSA_main[KLoSA_main$hw < minimum_wage  & KLoSA_main$wave == 6 ,]
 intervention_group <- subset(intervention_group, select = c("pid"))
 intervention_group<- semi_join(KLoSA_main, intervention_group)
-
-# In the sensitivity analysis, we put additional restriction
-# 2) That the post minimum wage increase should fall between 90 - 120% of the new minimum wage.
-#intervention_group <- MW[MW$hw >= 0.90 * (minimum_wage + increase) & MW$hw <= 1.20 * (minimum_wage + increase) & MW$wave == 7,] 
 
 intervention_group$exposure <- 1
 intervention_group$group <- "intervention"
@@ -996,19 +966,19 @@ KLoSA_detail <- NULL
 notworking_wave6 <- KLoSA_main[!is.na(KLoSA_main$wd_com032) & KLoSA_main$wave == 6,] 
 notworking_wave6 <- subset(notworking_wave6, select = c("pid"))
 KLoSA_main  <- left_join(notworking_wave6, KLoSA_main) 
-# (12754 - 4540)/12754 =  64%, 8214
+
 notworking_wave6 <- NULL
 
 # We select individuals worked as a paid employee at baseline.
 employee <- KLoSA_main[KLoSA_main$wemp == 1 & KLoSA_main$wave == 6,] #1. employee #2. self-employed #3. unpaid family-related labor 
 employee  <- subset(employee, select = c("pid"))
-KLoSA_main  <- left_join(employee, KLoSA_main) #1057
-# (4540 - 2167)/4540 = 52&, 2373
+KLoSA_main  <- left_join(employee, KLoSA_main) 
+
 employee <- NULL
 
 # We select individuals with main health outcome.
 KLoSA_main <- KLoSA_main[!is.na(KLoSA_main$wmmse),]
-# (2167 - 2075)/2167  = 4%, 92
+
 
 #We calculate hourly wage from monthly wage and weekly working hours. 
 
@@ -1016,22 +986,20 @@ KLoSA_main$ww <- KLoSA_main$wd_com052/(52/12) #weekly wage
 KLoSA_main$hw <- KLoSA_main$ww/KLoSA_main$wd_com032 #hourly wage
 KLoSA_main[!is.na(KLoSA_main$hw) & KLoSA_main$hw < 0,] <- NA #those without hourly wage information and negative hourly wage are considered as missing.
 
-minimum_wage = 0.603 # minimum wage at year 2016
-increase = 0.753 - 0.603 #increase from year 2016 to 2018.
-
+minimum_wage = 0.753 # minimum wage at year 2018
 # Exclude individuals whose minimum wage at baseline was bigger than 150% of it.
 
 attrition <- KLoSA_main[KLoSA_main$wave == 6 & KLoSA_main$hw > 0,]
 attrition <- attrition[attrition$hw <= minimum_wage * 1.5 & attrition$wave == 6 ,]
 
 attrition <- subset(attrition, select = c("pid"))
-attrition <- semi_join(KLoSA_main, attrition) # (2075 - 1154)/2075 = 44%, 921
+attrition <- semi_join(KLoSA_main, attrition) 
 
 # Exclude unemployed individuals after the minimum wage increase.
 # In the sensitivity analysis, we relax this condition. 
 
 attrition <- attrition[!is.na(attrition$hw),]
-KLoSA_main <- attrition # without unemployed individuals (1154 - 987)/1154 = 14%, 167 
+KLoSA_main <- attrition # without unemployed individuals 
 
 # Include individuals with observations available in both waves.
 
@@ -1040,7 +1008,7 @@ KLoSA_main <-
   dplyr::mutate(wave = as.integer(wave)) %>% 
   group_by(pid) %>% 
   dplyr::mutate(grp = cumsum(c(1, diff(wave) != 1))) %>% 
-  filter(n() >= 2)# without unemployed individuals (987 - 790)/987 = 20%, 197
+  filter(n() >= 2)# without unemployed individuals 
 
 # Intervention group assignment
 # 1) Hourly wage at baseline is smaller than the minimum wage.
@@ -1049,8 +1017,8 @@ intervention_group <- subset(intervention_group, select = c("pid"))
 intervention_group<- semi_join(KLoSA_main, intervention_group)
 
 # In the sensitivity analysis, we put additional restriction
-# 2) That the post minimum wage increase should fall between 90 - 120% of the new minimum wage.
-intervention_group2 <- intervention_group[intervention_group$hw >= 0.90 * (minimum_wage + increase) & intervention_group$hw <= 1.20 * (minimum_wage + increase) & intervention_group$wave == 7,] 
+# 2) That the post minimum wage increase should fall between 100 - 120% of the new minimum wage.
+intervention_group2 <- intervention_group[intervention_group$hw >= minimum_wage & intervention_group$hw <= 1.20 * (minimum_wage) & intervention_group$wave == 7,] 
 intervention_group2 <- subset(intervention_group2, select = c("pid"))
 intervention_group<- semi_join(intervention_group, intervention_group2)
 
@@ -1152,19 +1120,19 @@ KLoSA_detail <- NULL
 notworking_wave6 <- KLoSA_main[!is.na(KLoSA_main$wd_com032) & KLoSA_main$wave == 6,] 
 notworking_wave6 <- subset(notworking_wave6, select = c("pid"))
 KLoSA_main  <- left_join(notworking_wave6, KLoSA_main) 
-# (12754 - 4540)/12754 =  64%, 8214
+
 notworking_wave6 <- NULL
 
 # We select individuals worked as a paid employee at baseline.
 employee <- KLoSA_main[KLoSA_main$wemp == 1 & KLoSA_main$wave == 6,] #1. employee #2. self-employed #3. unpaid family-related labor 
 employee  <- subset(employee, select = c("pid"))
-KLoSA_main  <- left_join(employee, KLoSA_main) #1057
-# (4540 - 2167)/4540 = 52&, 2373
+KLoSA_main  <- left_join(employee, KLoSA_main) 
+
 employee <- NULL
 
 # We select individuals with main health outcome.
 KLoSA_main <- KLoSA_main[!is.na(KLoSA_main$wmmse),]
-# (2167 - 2075)/2167  = 4%, 92
+
 
 #We calculate hourly wage from monthly wage and weekly working hours. 
 
@@ -1172,8 +1140,8 @@ KLoSA_main$ww <- KLoSA_main$wd_com052/(52/12) #weekly wage
 KLoSA_main$hw <- KLoSA_main$ww/KLoSA_main$wd_com032 #hourly wage
 KLoSA_main[!is.na(KLoSA_main$hw) & KLoSA_main$hw < 0,] <- NA #those without hourly wage information and negative hourly wage are considered as missing.
 
-minimum_wage = 0.603 # minimum wage at year 2016
-increase = 0.753 - 0.603 #increase from year 2016 to 2018.
+minimum_wage = 0.753 # minimum wage at year 2018
+
 
 # Exclude individuals whose minimum wage at baseline was bigger than 150% of it.
 
@@ -1181,13 +1149,13 @@ attrition <- KLoSA_main[KLoSA_main$wave == 6 & KLoSA_main$hw > 0,]
 attrition <- attrition[attrition$hw <= minimum_wage * 1.5 & attrition$wave == 6 ,]
 
 attrition <- subset(attrition, select = c("pid"))
-attrition <- semi_join(KLoSA_main, attrition) # (2075 - 1154)/2075 = 44%, 921
+attrition <- semi_join(KLoSA_main, attrition) 
 
 # Exclude unemployed individuals after the minimum wage increase.
 # In the sensitivity analysis, we relax this condition. 
 
 attrition <- attrition[!is.na(attrition$hw),]
-KLoSA_main <- attrition # without unemployed individuals (1154 - 987)/1154 = 14%, 167 
+KLoSA_main <- attrition # without unemployed individuals 
 
 # Include individuals with observations available in both waves.
 
@@ -1196,17 +1164,13 @@ KLoSA_main <-
   dplyr::mutate(wave = as.integer(wave)) %>% 
   group_by(pid) %>% 
   dplyr::mutate(grp = cumsum(c(1, diff(wave) != 1))) %>% 
-  filter(n() >= 2)# without unemployed individuals (987 - 790)/987 = 20%, 197
+  filter(n() >= 2)# without unemployed individuals 
 
 # Intervention group assignment
 # 1) Hourly wage at baseline is smaller than the minimum wage.
 intervention_group <- KLoSA_main[KLoSA_main$hw < minimum_wage  & KLoSA_main$wave == 6 ,]
 intervention_group <- subset(intervention_group, select = c("pid"))
 intervention_group<- semi_join(KLoSA_main, intervention_group)
-
-# In the sensitivity analysis, we put additional restriction
-# 2) That the post minimum wage increase should fall between 90 - 120% of the new minimum wage.
-#intervention_group <- MW[MW$hw >= 0.90 * (minimum_wage + increase) & MW$hw <= 1.20 * (minimum_wage + increase) & MW$wave == 7,] 
 
 intervention_group$exposure <- 1
 intervention_group$group <- "intervention"
@@ -1437,8 +1401,7 @@ KLoSA_main$ww <- KLoSA_main$wd_com052/(52/12) #weekly wage
 KLoSA_main$hw <- KLoSA_main$ww/KLoSA_main$wd_com032 #hourly wage
 KLoSA_main[!is.na(KLoSA_main$hw) & KLoSA_main$hw < 0,] <- NA #those without hourly wage information and negative hourly wage are considered as missing.
 
-minimum_wage = 0.521 # minimum wage at year 2014
-increase = 0.603 - 0.521 #increase from year 2014 to 2016.
+minimum_wage = 0.603 # minimum wage at year 2016
 
 # Exclude individuals whose minimum wage at baseline was bigger than 150% of it.
 
@@ -1470,8 +1433,8 @@ intervention_group <- subset(intervention_group, select = c("pid"))
 intervention_group<- semi_join(KLoSA_main, intervention_group)
 
 # In the sensitivity analysis, we put additional restriction
-# 2) That the post minimum wage increase should fall between 90 - 120% of the new minimum wage.
-#intervention_group <- MW[MW$hw >= 0.90 * (minimum_wage + increase) & MW$hw <= 1.20 * (minimum_wage + increase) & MW$wave == 6,] 
+# 2) That the post minimum wage increase should fall between 100 - 120% of the new minimum wage.
+#intervention_group <- MW[MW$hw >= minimum_wage & MW$hw <= 1.20 * (minimum_wage) & MW$wave == 6,] 
 
 intervention_group$exposure <- 1
 intervention_group$group <- "intervention"
