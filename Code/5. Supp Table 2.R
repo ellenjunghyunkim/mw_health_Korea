@@ -306,7 +306,7 @@ sel <- c("female", "wA002_age",  "spouse",
           "mmse", "health",  "attrition")
 
 statistics <-
-  survey::svydesign(KLoSA_main$pid, data = subset(KLoSA_main , select = sel), weights = NULL) %>%
+  survey::svydesign(KLoSA_main$pid, data = subset(KLoSA_main , select = sel), weights = KLoSA_main$wwgt_c) %>%
   tbl_svysummary(by = attrition, statistic = list(all_continuous() ~ "{mean} ({sd})",
                                               all_categorical() ~ "{n}  ({p}%)"),
                  type = list(c("income",  "working_days", "working_hours") ~ "continuous"),
