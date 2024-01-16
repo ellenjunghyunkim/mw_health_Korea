@@ -26,7 +26,7 @@ setwd("~/Documents/CognitiveDecline/KLoSA_STATA_2022v3")
 rm(list=ls())
 
 ####################################################################################################
-## Sensitivity analysis 1. Alternative definition of control group. 
+## Table 5. 
 ####################################################################################################
 
 ####################################################################################################
@@ -791,7 +791,7 @@ weighted <- plm(wmmse ~ did + factor(age_category) + public_trasfer_dummy + spou
 summary(weighted)
 
 ####################################################################################################
-## Including unemployed individuals
+## Table 6. (Including unemployed individuals)
 ####################################################################################################
 
 
@@ -944,7 +944,7 @@ summary(weighted)
 
 
 ####################################################################################################
-## Sensitivity analysis 2. Alternative definition of intervention group. 
+## Supplementary Table 3, Supplementary Table 1
 ####################################################################################################
 rm(list=ls())
 
@@ -1096,6 +1096,39 @@ weighted <- plm(wmmse ~ did + factor(age_category) + public_trasfer_dummy + spou
                 effect = "twoways")
 
 summary(weighted)
+#####################################################################################################################################
+#Descriptive statistics Supp. Table 1
+#####################################################################################################################################
+
+library(srvyr)
+library(gtsummary)
+library(gtsummary)
+library(tidyverse)
+
+KLoSA_main$wA002_age <- as.numeric(KLoSA_main$wA002_age)
+KLoSA_main$spouse <- ifelse(KLoSA_main$wmarital == 1, 1, 0)
+KLoSA_main$wedu <- as.numeric(KLoSA_main$wedu)
+KLoSA_main$income <- as.numeric(KLoSA_main$wd_com052) #income
+KLoSA_main$working_days <- as.numeric(KLoSA_main$wd_com031) #working days
+KLoSA_main$working_hours <- as.numeric(KLoSA_main$wd_com032) #working hours
+KLoSA_main$mmse <- as.numeric(KLoSA_main$wmmse)
+KLoSA_main$health <- as.numeric(KLoSA_main$health)
+
+sel <- c("female", "wA002_age",  "spouse", 
+         "working_days","working_hours", 
+         "wedu",  "income",
+         "mmse", "health", "group")
+
+statistics <-
+  survey::svydesign(KLoSA_main[KLoSA_main$wave == 6,]$pid, data = subset(KLoSA_main[KLoSA_main$wave == 6,] , select = sel), weights = KLoSA_main[KLoSA_main$wave == 6,]$wwgt_c) %>%
+  tbl_svysummary(by = group, statistic = list(all_continuous() ~ "{mean} ({sd})",
+                                              all_categorical() ~ "{n}  ({p}%)"),
+                 type = list(c("income",  "working_days", "working_hours") ~ "continuous"),
+                 digits = all_continuous() ~ 2,)%>%
+  add_p(test = list(all_continuous() ~ "svy.t.test",all_categorical() ~ "svy.wald.test")) 
+
+statistics
+
 ####################################################################################################
 ## Sensitivity analysis 3. Alternative outcome variables. 
 ####################################################################################################
