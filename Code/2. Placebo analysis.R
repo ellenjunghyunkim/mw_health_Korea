@@ -91,10 +91,6 @@ intervention_group <- KLoSA_main[KLoSA_main$hw < minimum_wage  & KLoSA_main$wave
 intervention_group <- subset(intervention_group, select = c("pid"))
 intervention_group<- semi_join(KLoSA_main, intervention_group)
 
-# In the sensitivity analysis, we put additional restriction
-# 2) That the post minimum wage increase should fall between 90 - 120% of the new minimum wage.
-#intervention_group <- MW[MW$hw >= 0.90 * (minimum_wage + increase) & MW$hw <= 1.20 * (minimum_wage + increase) & MW$wave == 7,] 
-
 intervention_group$exposure <- 1
 intervention_group$group <- "intervention"
 
