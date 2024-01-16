@@ -303,10 +303,10 @@ KLoSA_main$health <- as.numeric(KLoSA_main$health)
 sel <- c("female", "wA002_age",  "spouse", 
          "working_days","working_hours", 
          "wedu",  "income",
-         "group", "mmse", "health",  "attrition", "wwgt_c")
+          "mmse", "health",  "attrition")
 
 statistics <-
-  survey::svydesign(KLoSA_main$pid, data = subset(KLoSA_main , select = sel), weights = KLoSA_main$wwgt_c) %>%
+  survey::svydesign(KLoSA_main$pid, data = subset(KLoSA_main , select = sel), weights = NULL) %>%
   tbl_svysummary(by = attrition, statistic = list(all_continuous() ~ "{mean} ({sd})",
                                               all_categorical() ~ "{n}  ({p}%)"),
                  type = list(c("income",  "working_days", "working_hours") ~ "continuous"),
@@ -314,6 +314,7 @@ statistics <-
   add_p(test = list(all_continuous() ~ "svy.t.test",all_categorical() ~ "svy.wald.test")) 
 
 statistics
+
 
 
 
