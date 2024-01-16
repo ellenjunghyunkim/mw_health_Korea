@@ -859,6 +859,7 @@ KLoSA_main <-
   group_by(pid) %>% 
   dplyr::mutate(grp = cumsum(c(1, diff(wave) != 1))) %>% 
   filter(n() >= 2)# without unemployed individuals 
+KLoSA_main <- KLoSA_main[!is.na(KLoSA_main$pid),] #without unemployed individuals (1349-1274)/1349
 
 # Intervention group assignment
 # 1) Hourly wage at baseline is smaller than the minimum wage.
