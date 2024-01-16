@@ -182,9 +182,6 @@ KLoSA_main$ww <- KLoSA_main$wd_com052/(52/12) #weekly wage
 KLoSA_main$hw <- KLoSA_main$ww/KLoSA_main$wd_com032 #hourly wage
 KLoSA_main[!is.na(KLoSA_main$hw) & KLoSA_main$hw < 0,] <- NA #those without hourly wage information and negative hourly wage are considered as missing.
 
-#minimum_wage = 0.603 #minimum wage at year 2016
-#increase = 0.753 - 0.603 #increase from year 2016 to 2018.
-
 minimum_wage = 0.753 #minimum wage at year 2018
 
 # Exclude individuals whose minimum wage at baseline was bigger than 150% of it.
@@ -306,10 +303,10 @@ KLoSA_main$health <- as.numeric(KLoSA_main$health)
 sel <- c("female", "wA002_age",  "spouse", 
          "working_days","working_hours", 
          "wedu",  "income",
-         "group", "mmse", "health",  "attrition")
+         "group", "mmse", "health",  "attrition", "wwgt_c")
 
 statistics <-
-  survey::svydesign(KLoSA_main$pid, data = subset(KLoSA_main , select = sel), weights = NULL) %>%
+  survey::svydesign(KLoSA_main$pid, data = subset(KLoSA_main , select = sel), weights = KLoSA_main$wwgt_c) %>%
   tbl_svysummary(by = attrition, statistic = list(all_continuous() ~ "{mean} ({sd})",
                                               all_categorical() ~ "{n}  ({p}%)"),
                  type = list(c("income",  "working_days", "working_hours") ~ "continuous"),
@@ -318,45 +315,5 @@ statistics <-
 
 statistics
 
-
-
-
-
-
-
-
-
-
-
-KLoSA_MW$wA002_age <- as.numeric(KLoSA_MW$wA002_age)
-KLoSA_MW$age_squared <- as.numeric(KLoSA_MW$wA002_age*KLoSA_MW$wA002_age)
-KLoSA_MW$spouse <- ifelse(KLoSA_MW$wmarital == 1, 1, 0)
-KLoSA_MW$wospouse <- ifelse(KLoSA_MW$wmarital != 1, 1, 0)
-KLoSA_MW$wgender1 <- as.numeric(KLoSA_MW$wgender1)
-KLoSA_MW$registration <- as.numeric(KLoSA_MW$registration)
-KLoSA_MW$recall <- as.numeric(KLoSA_MW$recall)
-KLoSA_MW$wA032 <- as.numeric(KLoSA_MW$wA032)
-KLoSA_MW$wedu <- as.numeric(KLoSA_MW$wedu)
-KLoSA_MW$wmarital <- as.numeric(KLoSA_MW$wmarital)
-KLoSA_MW$wd_com052 <- as.numeric(KLoSA_MW$wd_com052) #income
-KLoSA_MW$wd_com031 <- as.numeric(KLoSA_MW$wd_com031) #working days
-KLoSA_MW$wd_com032 <- as.numeric(KLoSA_MW$wd_com032) #working hours
-KLoSA_MW$edu <- ifelse(KLoSA_MW$wedu >= 3, 1, 0)
-KLoSA_MW$mmse <- as.numeric(KLoSA_MW$wmmse)
-KLoSA_MW$health <- as.numeric(KLoSA_MW$health)
-KLoSA_MW$wpublictrans <- as.numeric(KLoSA_MW$wpublictrans)
-
-sel <- c("wgender1", "wA002_age", "age_squared", "spouse", "wospouse",
-         "wA032", "wd_com031","wd_com032", 
-         "wedu",  "wd_com052",
-         "hw", "edu", "mmse", "health", "attrition")
-
-tbl_svysummary_ex1 <-
-  survey::svydesign(KLoSA_MW$pid, data = subset(KLoSA_MW , select = sel), weights = KLoSA_MW$wwgt_c) %>%
-  tbl_svysummary(by = attrition, statistic = list(all_continuous() ~ "{mean} ({sd})",
-                                                  all_categorical() ~ "{n}  ({p}%)"),
-                 type = list(c("wd_com052", "hw", "wd_com031") ~ "continuous"),
-                 digits = all_continuous() ~ 2,)%>%
-  add_p(test = list(all_continuous() ~ "svy.t.test",all_categorical() ~ "svy.wald.test")) 
 
 
