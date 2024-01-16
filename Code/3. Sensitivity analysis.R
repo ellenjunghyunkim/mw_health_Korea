@@ -1302,26 +1302,6 @@ KLoSA_main$visual_construction <- ifelse(KLoSA_main$wC419 == 1, 1, 0)
 #KLoSA_main$mmse_seperate <- KLoSA_main$temporal + KLoSA_main$place + KLoSA_main$registration + KLoSA_main$attention_calculation + KLoSA_main$recall + 
 # KLoSA_main$language + KLoSA_main$visual_construction 
 
-# memory
-
-recall <- plm(recall ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
-              data = KLoSA_main,
-              index = c("pid", "wave"), 
-              model = "within", 
-              weights = weights,
-              effect = "twoways")
-
-summary(recall)
-
-registration <- plm(registration ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
-              data = KLoSA_main,
-              index = c("pid", "wave"), 
-              model = "within", 
-              weights = weights,
-              effect = "twoways")
-
-summary(registration)
-
 # temporal
 
 temp <- plm(temporal ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
@@ -1344,6 +1324,17 @@ place <- plm(place ~ did + factor(age_category) + public_trasfer_dummy + spouse,
 
 summary(place)
 
+# immediate recall
+
+registration <- plm(registration ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+                    data = KLoSA_main,
+                    index = c("pid", "wave"), 
+                    model = "within", 
+                    weights = weights,
+                    effect = "twoways")
+
+summary(registration)
+
 # attention
 
 attention <- plm(attention_calculation ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
@@ -1354,6 +1345,17 @@ attention <- plm(attention_calculation ~ did + factor(age_category) + public_tra
                  effect = "twoways")
 
 summary(attention)
+
+# delayed recall
+
+recall <- plm(recall ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+              data = KLoSA_main,
+              index = c("pid", "wave"), 
+              model = "within", 
+              weights = weights,
+              effect = "twoways")
+
+summary(recall)
 
 # language
 
