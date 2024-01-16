@@ -214,9 +214,19 @@ KLoSA_main$health <- as.numeric(KLoSA_main$health)
 sel <- c("female", "wA002_age",  "spouse", 
          "working_days","working_hours", 
          "wedu",  "income",
-         "group", "mmse", "health")
+         "group", "mmse", "health", "wwgt_c")
 
-statistics <-
+Unweighted_statistics <-
+  survey::svydesign(KLoSA_main[KLoSA_main$wave == 6,]$pid, data = subset(KLoSA_main[KLoSA_main$wave == 6,] , select = sel), weights = KLoSA_main[KLoSA_main$wave == 6,]$wwgt_c) %>%
+  tbl_svysummary(by = group, statistic = list(all_continuous() ~ "{mean} ({sd})",
+                                              all_categorical() ~ "{n}  ({p}%)"),
+                 type = list(c("income",  "working_days", "working_hours") ~ "continuous"),
+                 digits = all_continuous() ~ 2,)%>%
+  add_p(test = list(all_continuous() ~ "svy.t.test",all_categorical() ~ "svy.wald.test")) 
+
+Unweighted_statistics
+
+Weighted_statistics <-
   survey::svydesign(KLoSA_main[KLoSA_main$wave == 6,]$pid, data = subset(KLoSA_main[KLoSA_main$wave == 6,] , select = sel), weights = KLoSA_main[KLoSA_main$wave == 6,]$weights) %>%
   tbl_svysummary(by = group, statistic = list(all_continuous() ~ "{mean} ({sd})",
                                               all_categorical() ~ "{n}  ({p}%)"),
@@ -224,5 +234,7 @@ statistics <-
                  digits = all_continuous() ~ 2,)%>%
   add_p(test = list(all_continuous() ~ "svy.t.test",all_categorical() ~ "svy.wald.test")) 
 
-statistics
+Weighted_statistics
+
+
 
