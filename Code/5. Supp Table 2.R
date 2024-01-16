@@ -1,4 +1,28 @@
+####################################################################################################
+## project: = Health effects of a minimum wage hike: Evidence from South Korea experiments
+## author(s): Jung Hyun Kim
+## code started: February, 2023
+## last update: January, 2024
+####################################################################################################
 
+####################################################################################################
+## clear work space
+####################################################################################################
+rm(list=ls())
+## set seed
+set.seed(41489)
+####################################################################################################
+## load packages 
+####################################################################################################
+x <- c("haven", "plm", "tidyverse", "ggplot2", "ggpubr", "dplyr", "expss", "foreign", "nnet", "reshape2","plyr","zoo",
+       "dplyr", "gtools","devtools", "xtable",  "lmtest","tidyr", "readr", "lmtest", "lfe", "srvyr", "gtsummary", "WeightIt")
+
+install.packages(x) 
+lapply(x, library, character.only = TRUE)
+
+#Please set your own directory.
+setwd("~/Documents/CognitiveDecline/KLoSA_STATA_2022v3")
+#download the data.
 rm(list=ls())
 
 library(haven)
