@@ -1304,14 +1304,23 @@ KLoSA_main$visual_construction <- ifelse(KLoSA_main$wC419 == 1, 1, 0)
 
 # memory
 
-memory <- plm(memory ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+recall <- plm(recall ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
               data = KLoSA_main,
               index = c("pid", "wave"), 
               model = "within", 
               weights = weights,
               effect = "twoways")
 
-summary(memory)
+summary(recall)
+
+registration <- plm(registration ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+              data = KLoSA_main,
+              index = c("pid", "wave"), 
+              model = "within", 
+              weights = weights,
+              effect = "twoways")
+
+summary(registration)
 
 # temporal
 
@@ -1357,6 +1366,16 @@ language <- plm(language ~ did + factor(age_category) + public_trasfer_dummy + s
 
 summary(language)
 
+# visual
+
+visual<- plm(visual_construction ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+              data = KLoSA_main,
+              index = c("pid", "wave"), 
+              model = "within", 
+              weights = weights,
+              effect = "twoways")
+
+summary(visual)
 
 ####################################################################################################
 ## Placebo sensitivity analysis: including unemployed individuals
