@@ -2,7 +2,7 @@
 ## project: = Health effects of a minimum wage hike: Evidence from South Korea experiments
 ## author(s): Jung Hyun Kim
 ## code started: February, 2023
-## last update: January, 2024
+## last update: October, 2024
 ####################################################################################################
 
 ####################################################################################################
