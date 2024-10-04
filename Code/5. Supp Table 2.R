@@ -2,7 +2,7 @@
 ## project: = Health effects of a minimum wage hike: Evidence from South Korea experiments
 ## author(s): Jung Hyun Kim
 ## code started: February, 2023
-## last update: January, 2024
+## last update: October, 2024
 ####################################################################################################
 
 ####################################################################################################
@@ -138,8 +138,8 @@ KLoSA_main$national_pension <- ifelse(KLoSA_main$wE033 == 4, 0, 1)
 KLoSA_main$specific_corporate_pension <- ifelse(KLoSA_main$wE044 == 4, 0, 1)
 KLoSA_main$social_security_pension <-KLoSA_main$wE070m5
 #KLoSA_main$private_pension <- ifelse(KLoSA_main$wE055 == 4, 0, 1)
-KLoSA_main$public_transfer <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
-KLoSA_main$public_trasfer_dummy <- ifelse(KLoSA_main$public_transfer != 0, 1, 0)
+KLoSA_main$all_pension <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
+KLoSA_main$pension_dummy <- ifelse(KLoSA_main$all_pension != 0, 1, 0)
 
 attrited <- KLoSA_main
 
@@ -266,8 +266,8 @@ KLoSA_main$national_pension <- ifelse(KLoSA_main$wE033 == 4, 0, 1)
 KLoSA_main$specific_corporate_pension <- ifelse(KLoSA_main$wE044 == 4, 0, 1)
 KLoSA_main$social_security_pension <-KLoSA_main$wE070m5
 #KLoSA_main$private_pension <- ifelse(KLoSA_main$wE055 == 4, 0, 1)
-KLoSA_main$public_transfer <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
-KLoSA_main$public_trasfer_dummy <- ifelse(KLoSA_main$public_transfer != 0, 1, 0)
+KLoSA_main$all_pension <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
+KLoSA_main$pension_dummy <- ifelse(KLoSA_main$all_pension != 0, 1, 0)
 
 main <- KLoSA_main
 
