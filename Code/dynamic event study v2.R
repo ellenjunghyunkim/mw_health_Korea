@@ -2,7 +2,7 @@
 ## project: = Health effects of a minimum wage hike: Evidence from South Korea experiments
 ## author(s): Jung Hyun Kim
 ## code started: February, 2023
-## last update: January, 2024
+## last update: October, 2024
 ####################################################################################################
 
 ####################################################################################################
@@ -144,8 +144,8 @@ KLoSA_main$national_pension <- ifelse(KLoSA_main$wE033 == 4, 0, 1)
 KLoSA_main$specific_corporate_pension <- ifelse(KLoSA_main$wE044 == 4, 0, 1)
 KLoSA_main$social_security_pension <-KLoSA_main$wE070m5
 #KLoSA_main$private_pension <- ifelse(KLoSA_main$wE055 == 4, 0, 1)
-KLoSA_main$public_transfer <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
-KLoSA_main$public_trasfer_dummy <- ifelse(KLoSA_main$public_transfer != 0, 1, 0)
+KLoSA_main$all_pension <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
+KLoSA_main$pension_dummy <- ifelse(KLoSA_main$all_pension != 0, 1, 0)
 
 
 ####################################################################################################
@@ -180,7 +180,7 @@ KLoSA_main$mmse <- as.numeric(KLoSA_main$wmmse)
 KLoSA_main$health <- as.numeric(KLoSA_main$health)
 
 
-# Estimate the dynamic effects.
+# Estimate the dynamic effects of cognitive function
 
 KLoSA_main$g <- case_when(KLoSA_main$exposure == 1 ~ 7,
                           KLoSA_main$exposure == 0 ~ 0)
@@ -189,12 +189,12 @@ install.packages("did2s")
 library(did2s)
 
 data = KLoSA_main
-yname = "health"
+yname = "mmse"
 idname = "pid"
 gname = "g"
 weights = "weights"
 tname = "wave"
-xformla = ~ factor(age_category) + public_trasfer_dummy + spouse
+xformla = ~ factor(age_category) + pension_dummy + spouse
 
 # Treat
 data$zz000treat = 1 * (data[[tname]] >= data[[gname]]) * (data[[gname]] > 0)
@@ -313,7 +313,7 @@ ggplot(data = out,
   ggplot2::geom_errorbar(position = position_dodge(.4), width=.5) +
   ggplot2::geom_vline(xintercept = -0.5, linetype = "dashed", color = "darkgrey") +
   ggplot2::geom_hline(yintercept = 0, linetype = "dashed", color = "darkgrey") +
-  ggplot2::labs(y = "Self-reported health", x = "Waves since 2018 minimum wage", color = "Estimator") +
+  ggplot2::labs(y = "Cognitive function (K-MMSE)", x = "Waves since 2018 minimum wage", color = "Estimator") +
   ggplot2::scale_y_continuous(limits = y_lims)  +
   ggplot2::scale_x_continuous(limits = x_lims)  +
   ggplot2::theme_minimal(base_size = 23) +
@@ -333,15 +333,13 @@ ggplot(data = out,
     #panel.border = element_rect(color = "black", fill = NA, size = 1), # Black border around the panel
     #plot.background = element_rect(fill = "transparent", color = NA)  # Transparent plot background
   )  +
- ggplot2::ggtitle("Effects of a large minimum wage increase on self-reported health")
+ ggplot2::ggtitle("Effects of a large minimum wage increase on cognitive functioning")
 
-data = KLoSA_main
+
+# Estimate the dynamic effects on self-reported health
+
+
 yname = "health"
-idname = "pid"
-gname = "g"
-weights = "weights"
-tname = "wave"
-xformla = ~ factor(age_category) + public_trasfer_dummy + spouse
 
 # Treat
 data$zz000treat = 1 * (data[[tname]] >= data[[gname]]) * (data[[gname]] > 0)
@@ -478,5 +476,5 @@ ggplot(data = out,
     #panel.border = element_rect(color = "black", fill = NA, size = 1), # Black border around the panel
     #plot.background = element_rect(fill = "transparent", color = NA)  # Transparent plot background
   ) +
-  ggplot2::ggtitle("Effect of 2018 Minimum Wage on Self-reported Health")
+  ggplot2::ggtitle("Effects of a large minimum wage increase on self-reported health")
 
