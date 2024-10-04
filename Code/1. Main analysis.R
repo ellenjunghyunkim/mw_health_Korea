@@ -2,7 +2,7 @@
 ## project: = Health effects of a minimum wage hike: Evidence from South Korea experiments
 ## author(s): Jung Hyun Kim
 ## code started: February, 2023
-## last update: January, 2024
+## last update: October, 2024
 ####################################################################################################
 
 ####################################################################################################
@@ -143,14 +143,14 @@ KLoSA_main$national_pension <- ifelse(KLoSA_main$wE033 == 4, 0, 1)
 KLoSA_main$specific_corporate_pension <- ifelse(KLoSA_main$wE044 == 4, 0, 1)
 KLoSA_main$social_security_pension <-KLoSA_main$wE070m5
 #KLoSA_main$private_pension <- ifelse(KLoSA_main$wE055 == 4, 0, 1)
-KLoSA_main$public_transfer <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
-KLoSA_main$public_trasfer_dummy <- ifelse(KLoSA_main$public_transfer != 0, 1, 0)
+KLoSA_main$all_pension <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
+KLoSA_main$pension_dummy <- ifelse(KLoSA_main$all_pension != 0, 1, 0)
 
 ####################################################################################################
 ## Propensity score unweighted difference-in-difference estimation
 ####################################################################################################
 
-unweighted <- plm(wmmse ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+unweighted <- plm(wmmse ~ did + factor(age_category) + pension_dummy + spouse, 
                data = KLoSA_main, 
                index = c("pid", "wave"), 
                model = "within", 
@@ -184,7 +184,7 @@ KLoSA_main <- KLoSA_main %>%
 
 #Weighted diff-in-diff
 
-weighted <- plm(wmmse ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+weighted <- plm(wmmse ~ did + factor(age_category) + pension_dummy + spouse, 
                data = KLoSA_main,
                index = c("pid", "wave"), 
                model = "within", 
@@ -217,7 +217,7 @@ sel <- c("female", "wA002_age",  "spouse",
          "group", "mmse", "health")
 
 Unweighted_statistics <-
-  survey::svydesign(KLoSA_main[KLoSA_main$wave == 6,]$pid, data = subset(KLoSA_main[KLoSA_main$wave == 6,] , select = sel), weights = KLoSA_main[KLoSA_main$wave == 6,]$wwgt_c) %>%
+  survey::svydesign(KLoSA_main[KLoSA_main$wave == 6,]$pid, data = subset(KLoSA_main[KLoSA_main$wave == 6,] , select = sel), weights = NULL) %>%
   tbl_svysummary(by = group, statistic = list(all_continuous() ~ "{mean} ({sd})",
                                               all_categorical() ~ "{n}  ({p}%)"),
                  type = list(c("income",  "working_days", "working_hours") ~ "continuous"),
@@ -235,6 +235,38 @@ Weighted_statistics <-
   add_p(test = list(all_continuous() ~ "svy.t.test",all_categorical() ~ "svy.wald.test")) 
 
 Weighted_statistics
+
+#Check the average income change before and after the large minimum wage.
+
+summary(KLoSA_main[KLoSA_main$wave == 6 & KLoSA_main$group == "control",]$income)
+summary(KLoSA_main[KLoSA_main$wave == 7 & KLoSA_main$group == "control",]$income)
+
+summary(KLoSA_main[KLoSA_main$wave == 6 & KLoSA_main$group == "intervention",]$income)
+summary(KLoSA_main[KLoSA_main$wave == 7 & KLoSA_main$group == "intervention",]$income)
+
+
+statistics1 <-
+  survey::svydesign(KLoSA_main[KLoSA_main$group == "control",]$pid, data = subset(KLoSA_main[KLoSA_main$group == "control",] , select = sel), weights = KLoSA_main[KLoSA_main$group == "control",]$weights) %>%
+  tbl_svysummary(by = wave, statistic = list(all_continuous() ~ "{mean} ({sd})",
+                                             all_categorical() ~ "{n}  ({p}%)"),
+                 type = list(c("income",  "working_days", "working_hours") ~ "continuous"),
+                 digits = all_continuous() ~ 2,)%>%
+  add_p(test = list(all_continuous() ~ "svy.t.test",all_categorical() ~ "svy.wald.test")) 
+
+statistics1 # 130 to 146 12%
+
+statistics2 <-
+  survey::svydesign(KLoSA_main[KLoSA_main$group == "intervention",]$pid, data = subset(KLoSA_main[KLoSA_main$group == "intervention",] , select = sel), weights = KLoSA_main[KLoSA_main$group == "intervention",]$weights) %>%
+  tbl_svysummary(by = wave, statistic = list(all_continuous() ~ "{mean} ({sd})",
+                                             all_categorical() ~ "{n}  ({p}%)"),
+                 type = list(c("income",  "working_days", "working_hours") ~ "continuous"),
+                 digits = all_continuous() ~ 2,)%>%
+  add_p(test = list(all_continuous() ~ "svy.t.test",all_categorical() ~ "svy.wald.test")) 
+
+statistics2 # 88 to 118 34%
+
+
+
 
 
 
