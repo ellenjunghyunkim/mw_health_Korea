@@ -27,4 +27,4 @@ KLoSA_MW.do subsets the variables of interest from the KLoSA longitudinal data.
 If you encounter any errors/problems reproducing the results, please send Jung Hyun an email.
 
 #### Updates 
-1. Included R code to generate the event study plots.
+1. Included R code to generate the event study plots. (October 4, 2024)
