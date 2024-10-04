@@ -146,8 +146,8 @@ KLoSA_main$national_pension <- ifelse(KLoSA_main$wE033 == 4, 0, 1)
 KLoSA_main$specific_corporate_pension <- ifelse(KLoSA_main$wE044 == 4, 0, 1)
 KLoSA_main$social_security_pension <-KLoSA_main$wE070m5
 #KLoSA_main$private_pension <- ifelse(KLoSA_main$wE055 == 4, 0, 1)
-KLoSA_main$public_transfer <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
-KLoSA_main$public_trasfer_dummy <- ifelse(KLoSA_main$public_transfer != 0, 1, 0)
+KLoSA_main$all_pension <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
+KLoSA_main$pension_dummy <- ifelse(KLoSA_main$all_pension != 0, 1, 0)
 
 # Only the pre-exposure period
 pre_exposure_data <- KLoSA_main[KLoSA_main$wave == 6, ]
@@ -169,7 +169,7 @@ KLoSA_main <- KLoSA_main %>%
 
 #Weighted diff-in-diff
 
-weighted <- plm(wmmse ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+weighted <- plm(wmmse ~ did + factor(age_category) + pension_dummy + spouse, 
                 data = KLoSA_main,
                 index = c("pid", "wave"), 
                 model = "within", 
@@ -299,8 +299,8 @@ KLoSA_main$national_pension <- ifelse(KLoSA_main$wE033 == 4, 0, 1)
 KLoSA_main$specific_corporate_pension <- ifelse(KLoSA_main$wE044 == 4, 0, 1)
 KLoSA_main$social_security_pension <-KLoSA_main$wE070m5
 #KLoSA_main$private_pension <- ifelse(KLoSA_main$wE055 == 4, 0, 1)
-KLoSA_main$public_transfer <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
-KLoSA_main$public_trasfer_dummy <- ifelse(KLoSA_main$public_transfer != 0, 1, 0)
+KLoSA_main$all_pension <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
+KLoSA_main$pension_dummy <- ifelse(KLoSA_main$all_pension != 0, 1, 0)
 
 # Only the pre-exposure period
 pre_exposure_data <- KLoSA_main[KLoSA_main$wave == 6, ]
@@ -322,7 +322,7 @@ KLoSA_main <- KLoSA_main %>%
 
 #Weighted diff-in-diff
 
-weighted <- plm(wmmse ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+weighted <- plm(wmmse ~ did + factor(age_category) + pension_dummy + spouse, 
                 data = KLoSA_main,
                 index = c("pid", "wave"), 
                 model = "within", 
@@ -452,8 +452,8 @@ KLoSA_main$national_pension <- ifelse(KLoSA_main$wE033 == 4, 0, 1)
 KLoSA_main$specific_corporate_pension <- ifelse(KLoSA_main$wE044 == 4, 0, 1)
 KLoSA_main$social_security_pension <-KLoSA_main$wE070m5
 #KLoSA_main$private_pension <- ifelse(KLoSA_main$wE055 == 4, 0, 1)
-KLoSA_main$public_transfer <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
-KLoSA_main$public_trasfer_dummy <- ifelse(KLoSA_main$public_transfer != 0, 1, 0)
+KLoSA_main$all_pension <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
+KLoSA_main$pension_dummy <- ifelse(KLoSA_main$all_pension != 0, 1, 0)
 
 # Only the pre-exposure period
 pre_exposure_data <- KLoSA_main[KLoSA_main$wave == 6, ]
@@ -475,7 +475,7 @@ KLoSA_main <- KLoSA_main %>%
 
 #Weighted diff-in-diff
 
-weighted <- plm(wmmse ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+weighted <- plm(wmmse ~ did + factor(age_category) + pension_dummy + spouse, 
                 data = KLoSA_main,
                 index = c("pid", "wave"), 
                 model = "within", 
@@ -605,8 +605,8 @@ KLoSA_main$national_pension <- ifelse(KLoSA_main$wE033 == 4, 0, 1)
 KLoSA_main$specific_corporate_pension <- ifelse(KLoSA_main$wE044 == 4, 0, 1)
 KLoSA_main$social_security_pension <-KLoSA_main$wE070m5
 #KLoSA_main$private_pension <- ifelse(KLoSA_main$wE055 == 4, 0, 1)
-KLoSA_main$public_transfer <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
-KLoSA_main$public_trasfer_dummy <- ifelse(KLoSA_main$public_transfer != 0, 1, 0)
+KLoSA_main$all_pension <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
+KLoSA_main$pension_dummy <- ifelse(KLoSA_main$all_pension != 0, 1, 0)
 
 # Only the pre-exposure period
 pre_exposure_data <- KLoSA_main[KLoSA_main$wave == 6, ]
@@ -628,7 +628,7 @@ KLoSA_main <- KLoSA_main %>%
 
 #Weighted diff-in-diff
 
-weighted <- plm(wmmse ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+weighted <- plm(wmmse ~ did + factor(age_category) + pension_dummy + spouse, 
                 data = KLoSA_main,
                 index = c("pid", "wave"), 
                 model = "within", 
@@ -758,8 +758,8 @@ KLoSA_main$national_pension <- ifelse(KLoSA_main$wE033 == 4, 0, 1)
 KLoSA_main$specific_corporate_pension <- ifelse(KLoSA_main$wE044 == 4, 0, 1)
 KLoSA_main$social_security_pension <-KLoSA_main$wE070m5
 #KLoSA_main$private_pension <- ifelse(KLoSA_main$wE055 == 4, 0, 1)
-KLoSA_main$public_transfer <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
-KLoSA_main$public_trasfer_dummy <- ifelse(KLoSA_main$public_transfer != 0, 1, 0)
+KLoSA_main$all_pension <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
+KLoSA_main$pension_dummy <- ifelse(KLoSA_main$all_pension != 0, 1, 0)
 
 # Only the pre-exposure period
 pre_exposure_data <- KLoSA_main[KLoSA_main$wave == 6, ]
@@ -781,7 +781,7 @@ KLoSA_main <- KLoSA_main %>%
 
 #Weighted diff-in-diff
 
-weighted <- plm(wmmse ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+weighted <- plm(wmmse ~ did + factor(age_category) + pension_dummy + spouse, 
                 data = KLoSA_main,
                 index = c("pid", "wave"), 
                 model = "within", 
@@ -910,8 +910,8 @@ KLoSA_main$national_pension <- ifelse(KLoSA_main$wE033 == 4, 0, 1)
 KLoSA_main$specific_corporate_pension <- ifelse(KLoSA_main$wE044 == 4, 0, 1)
 KLoSA_main$social_security_pension <-KLoSA_main$wE070m5
 #KLoSA_main$private_pension <- ifelse(KLoSA_main$wE055 == 4, 0, 1)
-KLoSA_main$public_transfer <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
-KLoSA_main$public_trasfer_dummy <- ifelse(KLoSA_main$public_transfer != 0, 1, 0)
+KLoSA_main$all_pension <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
+KLoSA_main$pension_dummy <- ifelse(KLoSA_main$all_pension != 0, 1, 0)
 
 # Only the pre-exposure period
 pre_exposure_data <- KLoSA_main[KLoSA_main$wave == 6, ]
@@ -933,7 +933,7 @@ KLoSA_main <- KLoSA_main %>%
 
 #Weighted diff-in-diff
 
-weighted <- plm(wmmse ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+weighted <- plm(wmmse ~ did + factor(age_category) + pension_dummy + spouse, 
                 data = KLoSA_main,
                 index = c("pid", "wave"), 
                 model = "within", 
@@ -1066,8 +1066,8 @@ KLoSA_main$national_pension <- ifelse(KLoSA_main$wE033 == 4, 0, 1)
 KLoSA_main$specific_corporate_pension <- ifelse(KLoSA_main$wE044 == 4, 0, 1)
 KLoSA_main$social_security_pension <-KLoSA_main$wE070m5
 #KLoSA_main$private_pension <- ifelse(KLoSA_main$wE055 == 4, 0, 1)
-KLoSA_main$public_transfer <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
-KLoSA_main$public_trasfer_dummy <- ifelse(KLoSA_main$public_transfer != 0, 1, 0)
+KLoSA_main$all_pension <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
+KLoSA_main$pension_dummy <- ifelse(KLoSA_main$all_pension != 0, 1, 0)
 
 # Only the pre-exposure period
 pre_exposure_data <- KLoSA_main[KLoSA_main$wave == 6, ]
@@ -1088,7 +1088,7 @@ KLoSA_main <- KLoSA_main %>%
   mutate(weights = first(weights))
 
 #Weighted diff-in-diff
-weighted <- plm(wmmse ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+weighted <- plm(wmmse ~ did + factor(age_category) + pension_dummy + spouse, 
                 data = KLoSA_main,
                 index = c("pid", "wave"), 
                 model = "within", 
@@ -1254,8 +1254,8 @@ KLoSA_main$national_pension <- ifelse(KLoSA_main$wE033 == 4, 0, 1)
 KLoSA_main$specific_corporate_pension <- ifelse(KLoSA_main$wE044 == 4, 0, 1)
 KLoSA_main$social_security_pension <-KLoSA_main$wE070m5
 #KLoSA_main$private_pension <- ifelse(KLoSA_main$wE055 == 4, 0, 1)
-KLoSA_main$public_transfer <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
-KLoSA_main$public_trasfer_dummy <- ifelse(KLoSA_main$public_transfer != 0, 1, 0)
+KLoSA_main$all_pension <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
+KLoSA_main$pension_dummy <- ifelse(KLoSA_main$all_pension != 0, 1, 0)
 
 
 ####################################################################################################
@@ -1337,7 +1337,7 @@ KLoSA_main$visual_construction <- ifelse(KLoSA_main$wC419 == 1, 1, 0)
 
 # temporal
 
-temp <- plm(temporal ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+temp <- plm(temporal ~ did + factor(age_category) + pension_dummy + spouse, 
             data = KLoSA_main,
             index = c("pid", "wave"), 
             model = "within", 
@@ -1348,7 +1348,7 @@ summary(temp)
 
 # place
 
-place <- plm(place ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+place <- plm(place ~ did + factor(age_category) + pension_dummy + spouse, 
              data = KLoSA_main,
              index = c("pid", "wave"), 
              model = "within", 
@@ -1359,7 +1359,7 @@ summary(place)
 
 # immediate recall
 
-registration <- plm(registration ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+registration <- plm(registration ~ did + factor(age_category) + pension_dummy + spouse, 
                     data = KLoSA_main,
                     index = c("pid", "wave"), 
                     model = "within", 
@@ -1370,7 +1370,7 @@ summary(registration)
 
 # attention
 
-attention <- plm(attention_calculation ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+attention <- plm(attention_calculation ~ did + factor(age_category) + pension_dummy + spouse, 
                  data = KLoSA_main,
                  index = c("pid", "wave"), 
                  model = "within", 
@@ -1381,7 +1381,7 @@ summary(attention)
 
 # delayed recall
 
-recall <- plm(recall ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+recall <- plm(recall ~ did + factor(age_category) + pension_dummy + spouse, 
               data = KLoSA_main,
               index = c("pid", "wave"), 
               model = "within", 
@@ -1392,7 +1392,7 @@ summary(recall)
 
 # language
 
-language <- plm(language ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+language <- plm(language ~ did + factor(age_category) + pension_dummy + spouse, 
                 data = KLoSA_main,
                 index = c("pid", "wave"), 
                 model = "within", 
@@ -1403,7 +1403,7 @@ summary(language)
 
 # visual
 
-visual<- plm(visual_construction ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+visual<- plm(visual_construction ~ did + factor(age_category) + pension_dummy + spouse, 
               data = KLoSA_main,
               index = c("pid", "wave"), 
               model = "within", 
@@ -1534,8 +1534,8 @@ KLoSA_main$national_pension <- ifelse(KLoSA_main$wE033 == 4, 0, 1)
 KLoSA_main$specific_corporate_pension <- ifelse(KLoSA_main$wE044 == 4, 0, 1)
 KLoSA_main$social_security_pension <-KLoSA_main$wE070m5
 #KLoSA_main$private_pension <- ifelse(KLoSA_main$wE055 == 4, 0, 1)
-KLoSA_main$public_transfer <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
-KLoSA_main$public_trasfer_dummy <- ifelse(KLoSA_main$public_transfer != 0, 1, 0)
+KLoSA_main$all_pension <- KLoSA_main$national_pension + KLoSA_main$specific_corporate_pension + KLoSA_main$social_security_pension
+KLoSA_main$pension_dummy <- ifelse(KLoSA_main$all_pension != 0, 1, 0)
 
 # Only the pre-exposure period
 pre_exposure_data <- KLoSA_main[KLoSA_main$wave == 5, ]
@@ -1557,7 +1557,7 @@ KLoSA_main <- KLoSA_main %>%
 
 #Weighted diff-in-diff
 
-weighted <- plm(wmmse ~ did + factor(age_category) + public_trasfer_dummy + spouse, 
+weighted <- plm(wmmse ~ did + factor(age_category) + pension_dummy + spouse, 
                 data = KLoSA_main,
                 index = c("pid", "wave"), 
                 model = "within", 
