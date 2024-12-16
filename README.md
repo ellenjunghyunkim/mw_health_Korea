@@ -1,6 +1,6 @@
 ## Description of the data
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14500811.svg)](https://doi.org/10.5281/zenodo.14500811)
-- The codes and data are for the paper [The unintended effects of a large minimum wage increase on health: Evidence from South Korea (2024)](https://www.sciencedirect.com/science/article/pii/S0277953624010803). 
+- The codes and data are for the paper [The unintended effects of a large minimum wage increase on health: Evidence from South Korea (2024)](https://www.sciencedirect.com/science/article/pii/S0277953624010803) (Jung Hyun Kim, Marc Suhrcke, Anja K. Leist).
 
 ### Data
 - KLoSA 1-8th wave version 2022 v3 (STATA) (https://survey.keis.or.kr/eng/klosa/databoard/List.jsp).
